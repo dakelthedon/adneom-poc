@@ -13,34 +13,34 @@ public class PartitionApp {
 	
 	public static void main(String[] args) {
 		
+		logger.info("Welcome in partition App!");
+		
 		List<String> argsList = new ArrayList<>(Arrays.asList(args));
 		logger.info("Args = " + argsList.toString());
 		
-		PartitionService partition = new PartitionService();
+		PartitionService partitionService = new PartitionService();
 		
 		List<List<String>> partitions = new ArrayList<List<String>>();
 		
-//		if (CollectionUtils.isEmpty(argsList)) {
-//			logger.info("Partitions = " + partitions.toString());
-//			return;
-//		} else if (argsList.size() == 1) {
-//			partitions.add(argsList);
-//			logger.info("Partitions = " + partitions.toString());
-//			return;
-//		} else {
-//			try {
-//				
-//			} catch (NumberFormatException e) {
-//				logger.info(" Your partition size " + argsList.get(args.length - 1) + " is not a number");
-//				
-//			}
-//		}
-		
-		partition.getPartitions(argsList, 2);
-		
-		
-		
-		logger.info("Hello World!");
-		// System.out.println("Hello World!");
+		if (argsList == null || argsList.isEmpty()) {
+			logger.info("Partitions = " + partitions.toString());
+			return;
+		} else if (argsList.size() == 1) {
+			partitions.add(argsList);
+			logger.info("Partitions = " + partitions.toString());
+			return;
+		} else {
+			Integer partitionSize = null;
+			try {
+				partitionSize = Integer.valueOf(argsList.get(argsList.size() - 1));
+			} catch (NumberFormatException e) {
+				logger.info(" Your partition size " + argsList.get(args.length - 1) + " is not a number");
+				return;
+			}
+			if (partitionSize != null) {
+				argsList.remove(argsList.size() - 1);
+				partitions = partitionService.getPartitions(argsList, partitionSize);
+			}
+		}
 	}
 }
