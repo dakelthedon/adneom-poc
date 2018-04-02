@@ -7,6 +7,11 @@ import java.util.logging.Logger;
 
 import com.dakelthedon.service.PartitionService;
 
+/**
+ * Partition App
+ * @author Kassoum
+ *
+ */
 public class PartitionApp {
 	
 	private static final Logger logger = Logger.getLogger(PartitionApp.class.getName());
@@ -37,9 +42,12 @@ public class PartitionApp {
 				logger.info(" Your partition size " + argsList.get(args.length - 1) + " is not a number");
 				return;
 			}
-			if (partitionSize != null) {
+			if (partitionSize > 0) {
 				argsList.remove(argsList.size() - 1);
 				partitions = partitionService.getPartitions(argsList, partitionSize);
+			} else {
+				logger.info(" Your partition size " + argsList.get(args.length - 1) + " has to be greater than 0");
+				return;
 			}
 		}
 	}
